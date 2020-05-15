@@ -6,11 +6,19 @@
       <div class="col-lg-4 mx-auto">
         <h2 class="text-center mb-4" style="color: white;">Ingresar</h2>
         <div class="auto-form-wrapper">
-          <form action="#">
+          <form (ngSubmit)="onSubmit(form.value)" #form="ngForm">
+            <!-- Usuario -->
             <div class="form-group">
               <label class="label">Usuario</label>
               <div class="input-group">
-                <input type="email" class="form-control" placeholder="Email" />
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email"
+                  ngModel
+                  name="email"
+                  required
+                />
                 <div class="input-group-append">
                   <span class="input-group-text">
                     <i class="fa fa-check-circle"></i>
@@ -18,6 +26,7 @@
                 </div>
               </div>
             </div>
+            <!-- Password -->
             <div class="form-group">
               <label class="label">Contraseña</label>
               <div class="input-group">
@@ -25,6 +34,9 @@
                   type="password"
                   class="form-control"
                   placeholder="*********"
+                  ngModel
+                  name="password"
+                  required
                 />
                 <div class="input-group-append">
                   <span class="input-group-text">
@@ -34,7 +46,10 @@
               </div>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary submit-btn btn-block">
+              <button
+                [disabled]="form.invalid"
+                class="btn btn-primary submit-btn btn-block"
+              >
                 Login
               </button>
             </div>
@@ -44,7 +59,9 @@
                 >No estas registrado?
               </span>
               <br />
-              <a routerLink="/register" class="text-black text-small">Crear una cuenta</a>
+              <a routerLink="/register" class="text-black text-small"
+                >Crear una cuenta</a
+              >
             </div>
           </form>
         </div>
