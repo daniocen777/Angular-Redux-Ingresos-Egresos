@@ -1,8 +1,13 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
-// Forms
+// Módulos
 import { FormsModule } from "@angular/forms";
+import { AppRoutingModule } from "./app-routing.module";
+// NGRX
+import { StoreModule } from "@ngrx/store";
+import { appReducers } from "./app.reducer";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 // Firebase
 import { AngularFireModule } from "angularfire2";
 import { AngularFirestoreModule } from "angularfire2/firestore";
@@ -10,7 +15,6 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 // Enviroments
 import { environment } from "src/environments/environment";
 
-import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
@@ -42,6 +46,11 @@ import { RegisterComponent } from "./auth/register/register.component";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
