@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 
 import { User } from "./user.model";
 import { AppState } from "../app.reducer";
-import { SetUserAction } from "./auth.actions";
+import { SetUserAction, UnsetUserAction } from "./auth.actions";
 import { Subscription } from "rxjs";
 
 @Injectable({
@@ -26,6 +26,7 @@ import { Subscription } from "rxjs";
 })
 export class AuthService {
   private userSubscription: Subscription = new Subscription();
+  private usuario: User;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -45,8 +46,10 @@ export class AuthService {
             // console.log(usuarioObj);
             const newUser = new User(usuarioObj);
             this.store.dispatch(new SetUserAction(newUser));
+            this.usuario = newUser;
           });
       } else {
+        this.usuario = null;
         // Si ya no se tiene el usuario firebase, desuscribirse
         this.userSubscription.unsubscribe();
       }
@@ -102,6 +105,7 @@ export class AuthService {
   logout() {
     this.router.navigate(["/login"]);
     this.afAuth.auth.signOut(); // cerrando sesión
+    this.store.dispatch(new UnsetUserAction());
   }
 
   isAuth() {
@@ -113,5 +117,9 @@ export class AuthService {
         return fbUser != null;
       })
     );
+  }
+
+  getUsuario() {
+    return { ...this.usuario };
   }
 }

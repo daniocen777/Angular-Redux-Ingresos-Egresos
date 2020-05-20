@@ -12,6 +12,8 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { AngularFireModule } from "angularfire2";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 import { AngularFireAuthModule } from "angularfire2/auth";
+// Gráficas
+import { ChartsModule } from 'ng2-charts';
 // Enviroments
 import { environment } from "src/environments/environment";
 
@@ -47,12 +49,14 @@ import { RegisterComponent } from "./auth/register/register.component";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ChartsModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
   ],
+
   providers: [],
   bootstrap: [AppComponent],
 })
